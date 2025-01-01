@@ -1,0 +1,54 @@
+class Solution {
+    public int[][] imageSmoother(int[][] img) {
+        int n = img.length;
+        int m = img[0].length;
+        
+        int sam[][] = new int[n][m];
+       for (int i = 0; i < n; i++) {
+           
+            for (int j = 0; j < m; j++) {
+                int sum = img[i][j];  // Start with the current cell
+                int count = 1;        // Include the current cell in count
+
+                // Manually check all 8 neighbors
+                if (i - 1 >= 0) { // Top
+                    sum += img[i - 1][j];
+                    count++;
+                }
+                if (i + 1 < n) { // Bottom
+                    sum += img[i + 1][j];
+                    count++;
+                }
+                if (j - 1 >= 0) { // Left
+                    sum += img[i][j - 1];
+                    count++;
+                }
+                if (j + 1 < m) { // Right
+                    sum += img[i][j + 1];
+                    count++;
+                }
+                if (i - 1 >= 0 && j - 1 >= 0) { // Top-left
+                    sum += img[i - 1][j - 1];
+                    count++;
+                }
+                if (i - 1 >= 0 && j + 1 < m) { // Top-right
+                    sum += img[i - 1][j + 1];
+                    count++;
+                }
+                if (i + 1 < n && j - 1 >= 0) { // Bottom-left
+                    sum += img[i + 1][j - 1];
+                    count++;
+                }
+                if (i + 1 < n && j + 1 < m) { // Bottom-right
+                    sum += img[i + 1][j + 1];
+                    count++;
+                }
+
+                // Calculate average and store it
+                sam[i][j] = sum / count;
+            }
+        }
+
+        return sam;
+    }
+}
