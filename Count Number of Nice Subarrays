@@ -1,0 +1,35 @@
+class Solution {
+    public int numberOfSubarrays(int[] nums, int k) {
+        int n = nums.length;
+        int ans = 0;
+        for(int i=0;i<n;i++){
+            if(nums[i]%2 == 0){
+                nums[i] = 0;
+            }else{
+                nums[i] = 1;
+            }
+        }
+        return sliding(nums,k)-sliding(nums,k-1);
+    }
+    public int sliding(int nums[],int k){
+        int l = 0;
+        int r = 0;
+        int n = nums.length;
+
+        int sum = 0;
+        int count = 0;
+
+        while(r < n){
+             if(nums[r]+sum <= k){
+                sum = nums[r]+sum;
+                count = count+(r-l+1);
+                r++;
+             }else{
+                sum = sum-nums[l];
+                l++;
+             }
+        }
+      //  System.out.println(count);
+      return count;
+    }
+}  // 1 1 0 1 1
