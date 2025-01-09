@@ -1,0 +1,16 @@
+class Solution {
+    public String convertToTitle(int Number) {
+        String ans = "";
+
+        while(Number > 0){
+            Number--;
+            int rem = Number%26;
+            int temp = 'A'+rem;
+            ans = Character.toString ((char) temp)+ans;
+
+            Number = Number/26;
+        }
+
+        return ans;
+    }
+}
