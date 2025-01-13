@@ -1,0 +1,20 @@
+class Solution {
+    int  n;
+    public boolean solve(String s,int ind,List<String> dict,Boolean []memo){
+        if(ind == n)return true;
+        if(memo[ind] != null) return memo[ind];
+
+        for(int i=ind+1;i<=n;i++){
+           String split = s.substring(ind,i);
+           if(dict.contains(split) && solve(s,i,dict,memo)){
+            return memo[ind] = true;
+           }
+        }
+        return memo[ind] = false;
+    }
+    public boolean wordBreak(String s, List<String> wordDict) {
+        n = s.length();
+        Boolean[] memo = new Boolean[n];
+        return solve(s,0,wordDict,memo);
+    }
+}
