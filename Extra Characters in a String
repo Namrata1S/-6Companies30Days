@@ -1,0 +1,37 @@
+class Solution {
+    int n;
+    public int solve(String s,List<String> dict,int ind,int []mem){
+        if(ind >= n) return 0;
+        
+        if(mem[ind] != -1) return mem[ind];
+        String cs = "";
+        int minex = n;
+
+        for(int i=ind;i<n;i++){
+           cs += s.charAt(i);
+           int extra = 0;
+           if(!dict.contains(cs)){
+            extra = cs.length();
+           }
+           int nextextra = solve(s,dict,i+1,mem);
+           int totalex = extra+nextextra;
+
+           minex = Math.min(minex,totalex);
+       
+        }
+
+        return mem[ind] = minex;
+    }
+    public int minExtraChar(String s, String[] dictionary) {
+        n = s.length();
+        int mem[] = new int[51];
+        Arrays.fill(mem,-1);
+        int m = dictionary.length;
+        List<String> dict = new ArrayList<>();
+
+        for(int i=0;i<m;i++){
+            dict.add(dictionary[i]);
+        }
+        return solve(s,dict,0,mem);
+    }
+}
