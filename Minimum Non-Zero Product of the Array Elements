@@ -1,0 +1,21 @@
+class Solution {
+    public long power(long a,long b,long mod){
+        long res = 1;
+        long base = a%mod;
+        while(b > 0){
+            if(b%2 == 1){
+                res = (res * base) % mod;
+            }
+         base = (base*base)%mod;
+         b = b/2;
+        }
+        return res;
+    }
+    public int minNonZeroProduct(int p) {
+        long mod = 1000000007;
+        long max = (long)Math.pow(2,p)-1;
+        long power = power(max-1,(max-1)/2,mod);
+        power = ((power%mod)*(max%mod))%mod;
+        return (int)power;
+    }
+}
