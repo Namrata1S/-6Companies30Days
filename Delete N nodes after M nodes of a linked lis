@@ -1,0 +1,21 @@
+class Solution {
+    static void linkdelete(Node head, int n, int m) {
+        // your code here
+        Node temp = head;
+        int t = 0;
+        
+        while(temp != null && temp.next != null){
+            t++;
+            int x = n;
+            if(t == m){
+                while(x > 0){
+                    temp.next = temp.next.next;
+                    if(temp.next == null)return;
+                 t=0;
+                 x--;
+                }
+            }
+            temp = temp.next;
+        }
+    }
+}
