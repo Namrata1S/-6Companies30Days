@@ -1,0 +1,50 @@
+import java.util.*;
+
+public class Main {
+    private static final int MOD = 1000000007;
+    
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = scanner.nextInt();
+        }
+        countTribonacciSubarrays(n, arr);
+    }
+
+    public static void countTribonacciSubarrays(int n, int[] arr) {
+        Set<Integer> tribonacciSet = generateTribonacciNumbers();
+
+        int ans = 0;
+        for (int i = 0; i < n; i++) {
+            if (!tribonacciSet.contains(arr[i])) continue; 
+
+            for (int j = i; j < n; j++) {
+                if (!tribonacciSet.contains(arr[j])) break;
+                ans = (ans + 1) % MOD;
+            }
+        }
+
+        System.out.println(ans);
+    }
+
+    public static Set<Integer> generateTribonacciNumbers() {
+        Set<Integer> tribonacciSet = new HashSet<>();
+        int a = 0, b = 1, c = 1;
+        tribonacciSet.add(a);
+        tribonacciSet.add(b);
+        tribonacciSet.add(c);
+
+        while (c <= 1_000_000_000) { 
+            int next = a + b + c;
+            if (next > 1_000_000_000) break;
+            tribonacciSet.add(next);
+            a = b;
+            b = c;
+            c = next;
+        }
+
+        return tribonacciSet;
+    }
+}
