@@ -1,0 +1,45 @@
+The exam scores for a class of N students have been released. The marks obtained by each student are stored in an array of scores[], where scores[i] represent the marks of the ith student.As the class monitor, Ram is tasked with answering queries from the teacher. The teacher will ask Q queries, and for each query, Ram needs to determine how many students have scored at least X marks.Your objective is to help Ram by finding the number of students who have scored at least X marks for each query.
+// solution
+import java.util.*;
+
+public class Main {
+    public static List<Integer> user_logic(int n, int q, List<Integer> scores, List<Integer> queries) {
+        // 1 3 4 9 12
+        List<Integer> results = new ArrayList<>();
+        Collections.sort(scores);
+        for(int i=0;i<q;i++){
+            int k = queries.get(i);
+            int c = 0;
+            int l=0;
+            int h=n-1;
+            while(l<=h){
+                int m = (l+h)/2;
+                if(scores.get(m) < k){
+                    l = m+1;
+                }else{
+                    h = m-1;
+                }
+            }
+            results.add(n-l); 
+        }
+        return results;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int q = scanner.nextInt();
+        List<Integer> scores = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            scores.add(scanner.nextInt());
+        }
+        List<Integer> queries = new ArrayList<>();
+        for (int i = 0; i < q; i++) {
+            queries.add(scanner.nextInt());
+        }
+        List<Integer> results = user_logic(n, q, scores, queries);
+        for (int result : results) {
+            System.out.println(result);
+        }
+    }
+}
