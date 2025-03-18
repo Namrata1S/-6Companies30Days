@@ -1,0 +1,94 @@
+You have a list of numbers arranged in a specific order, and your task is to rearrange the numbers in a particular way. Every third number should be grouped together while maintaining their original order within those groups.
+You need to make these changes directly in the original list without creating a new one. Finally, print the modified list.
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+class Node {
+    int data;
+    Node next;
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+class LinkedList {
+    Node head;
+    Node tail;
+
+    LinkedList() {
+        this.head = null;
+        this.tail = null;
+    }
+
+    void push(int data) {
+        Node newNode = new Node(data);
+        if (head == null) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail.next = newNode;
+            tail = newNode;
+        }
+    }
+
+    void printList() {
+        Node temp = head;
+        List<Integer> result = new ArrayList<>();
+        while (temp != null) {
+            result.add(temp.data);
+            temp = temp.next;
+        }
+        System.out.println(result.stream().map(String::valueOf).collect(Collectors.joining(" ")));
+    }
+}
+
+class Main {
+    static void userLogic(LinkedList linkedList) {
+        // Write your logic here.
+        List<Node> first = new ArrayList<>();
+        List<Node> second = new ArrayList<>();
+        List<Node> third = new ArrayList<>();
+
+        Node temp = linkedList.head;
+        int ind=0;
+        while(temp != null){
+            if(ind%3 == 0){
+              first.add(temp);
+            }else if(ind%3 == 1){
+            second.add(temp);
+            }else{
+              third.add(temp);
+            }
+
+            temp = temp.next;
+            ind++;
+        }
+
+        List<Node> newlist = new ArrayList<>();
+        newlist.addAll(first);
+         newlist.addAll(second);
+          newlist.addAll(third);
+
+          for (int i = 0; i < newlist.size() - 1; i++) {
+            newlist.get(i).next = newlist.get(i + 1);
+        }
+        newlist.get(newlist.size() - 1).next = null;
+
+          linkedList.head = newlist.get(0);
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        LinkedList linkedList = new LinkedList();
+        for (int i = 0; i < n; i++) {
+            int element = scanner.nextInt();
+            linkedList.push(element);
+        }
+        userLogic(linkedList);
+        linkedList.printList();
+        scanner.close();
+    }
+}
