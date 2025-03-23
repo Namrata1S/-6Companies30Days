@@ -1,0 +1,26 @@
+You are given a fidget spinner with numbered leaves from 1 to 6, and you need to find the number of possible 
+ways to construct a sum N using the numbers on the leaves. You can spin the spinner in either direction and repeatedly add the number pointed at by the spinner any number of times.
+import java.util.*;
+
+public class Main {
+    static final int MOD = 1000000007;
+
+    public static int ways(int sum) {
+        // Write your logic here.
+        if(sum == 0)return 1;
+        if(sum < 0) return 0;
+        int way = 0;
+
+        for(int i=1;i<=6;i++){
+            way = way+ways(sum-i)%MOD;
+        }
+        return way%MOD; // Placeholder
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int result = ways(n);
+        System.out.println(result);
+    }
+}
