@@ -1,0 +1,86 @@
+Given an array of positive integers and a positive integer K, find the count of all possible numbers that can be formed using the array elements that are divisible by K. Do not include duplicates.
+
+Input Format
+The first line contains an integer K.
+
+The second line contains an integer N, representing the size of the input array.
+
+The third line contains N space-separated integers, representing the elements of the input array.
+
+Output Format
+Print the count of all possible numbers that can be formed and are divisible by ( K ).
+
+Constraints
+1 <= K <= 10^2
+
+1 <= N <= 8
+
+1 <= Ai <= 10
+
+Sample Testcase 0
+Testcase Input
+2
+3
+4 2 3
+Testcase Output
+10
+Explanation
+Form all possible element which is divisible by k integer
+4 42 432 2 24 234 34 342 32 324
+All element divide by k integer
+
+
+//Solution
+// The complex came to my mind is first find all the permutation of array than find the sequences with unique number divisibke by k.
+// But the better approach is using backtracking efficiently.
+
+
+
+import java.util.*;
+
+public class Main {
+    public static int count_divisible_combinations(int K, int N, int[] arr) {
+        // User will write their logic here
+        // Parameters:
+        //     K: an integer
+        //     N: size of the input array
+        //     arr: array of integers representing the input array
+        // Returns:
+        //     int: Count of all possible numbers that can be formed and are divisible by K
+        Set<Integer> uniqueNumbers = new HashSet<>();
+        boolean[] used = new boolean[N];  // To track used digits for permutations
+        generateSequences(arr, K, new StringBuilder(), uniqueNumbers, used);
+        return uniqueNumbers.size(); 
+        
+    }
+       public static void generateSequences(int[] arr, int K, StringBuilder current, Set<Integer> uniqueNumbers, boolean[] used) {
+        if (current.length() > 0) {  // Ensure we have at least one digit
+            int number = Integer.parseInt(current.toString());
+            if (number % K == 0) {
+                uniqueNumbers.add(number);
+            }
+        }
+
+        // Generate all possible sequences by choosing each unused element
+        for (int i = 0; i < arr.length; i++) {
+            if (!used[i]) {
+                used[i] = true;
+                current.append(arr[i]);  // Add digit to sequence
+                generateSequences(arr, K, current, uniqueNumbers, used);
+                current.deleteCharAt(current.length() - 1);  // Backtrack
+                used[i] = false;
+            }
+        }
+    }
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int K = scanner.nextInt();
+        int N = scanner.nextInt();
+        int[] arr = new int[N];
+        for (int i = 0; i < N; i++) {
+            arr[i] = scanner.nextInt();
+        }
+        int result = count_divisible_combinations(K, N, arr);
+        System.out.println(result);
+    }
+}
