@@ -1,0 +1,51 @@
+//1765. Map of Highest Peak  bfs approach
+class Solution {
+    public int[][] highestPeak(int[][] isWater) {
+        int n = isWater.length;
+        int m = isWater[0].length;
+
+        int ans[][] = new int[n][m];
+        int vis[][] = new int[n][m];
+        
+        Queue<Node>q = new LinkedList<>();
+
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(isWater[i][j] == 1){
+                    q.add(new Node(i,j,0));
+                    vis[i][j] = 1;
+                }
+            }
+        }
+        int dx[] = new int[]{-1,+1,0,0};
+        int dy[] = new int[]{0,0,-1,+1};
+        while(!q.isEmpty()){
+            int a = q.peek().first;
+            int b = q.peek().second;
+            int c = q.peek().third;
+
+            q.poll();
+            ans[a][b] = c;
+           for(int i=0;i<4;i++){
+              int f = a+dx[i];
+              int s = b+dy[i];
+              if(f >= 0 && f < n && s >= 0 && s < m &&  vis[f][s] == 0){
+                  q.add(new Node(f,s,c+1));
+                  vis[f][s] = 1;
+              }
+           }
+        }
+        return ans;
+    }
+}
+class Node{
+    int first;
+    int second;
+    int third;
+
+    public Node(int first,int second,int third){
+        this.first = first;
+        this.second = second;
+        this.third = third;
+    }
+}
