@@ -1,0 +1,40 @@
+class Solution {
+
+    int countDistinctIslands(int[][] grid) {
+        // Your Code here
+        int n = grid.length;
+        int m = grid[0].length;
+        int [][]vis = new int[n][m];
+        HashSet<ArrayList<String>> set = new HashSet<>();
+        
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid[i][j] == 1 && vis[i][j] == 0){
+                    ArrayList<String> s = new ArrayList<>();
+                    dfs(grid,vis,i,j,s,i,j);
+                    set.add(s);
+                }
+            }
+        }
+        return set.size();
+        
+    }
+    void dfs(int [][]grid,int [][]vis,int rl,int cl,ArrayList<String> s,int r,int c){
+        vis[rl][cl] = 1;
+        s.add(toString(rl-r,cl-c));
+        int []dx = new int[]{-1,0,+1,0};
+        int []dy = new int[]{0,-1,0,+1};
+        
+        for(int i=0;i<4;i++){
+            int nrow = rl+dx[i];
+            int crow = cl+dy[i];
+            if(nrow >= 0 && crow >= 0 && nrow < grid.length && crow < grid[0].length && grid[nrow][crow] == 1 && vis[nrow][crow] == 0){
+                dfs(grid,vis,nrow,crow,s,r,c);
+            }
+        }
+    }
+    
+    String toString(int r,int c){
+        return Integer.toString(r)+""+Integer.toString(c);
+    }
+}
