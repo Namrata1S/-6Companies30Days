@@ -1,0 +1,37 @@
+//Ninja has been given an assignment by his teacher. He has been given three integers ‘a’,’b’, and ‘c’ which represent the coefficients of the equation “ax + by = c”. His task is to find the initial integral solution of the given equation if a finite solution exists.
+
+For example:
+
+If ‘a’, ‘b’, and ‘c’ are 5, 10, and 10 respectively, the initial integral solution will be 2 and 0 for ‘x’ and ‘y’ respectively.
+import java.util.* ;
+import java.io.*; 
+
+public class Solution {
+	public static int[] linearEquation(int a, int b, int c) {
+		// Write your code here
+		int xy[] = new int[2];
+		int g = extendgcd(a,b,xy);
+		if(c%g == 0){
+			int x = xy[0]*(c/g);
+			int y = xy[1]*(c/g);
+			return new int[]{x,y};
+		}
+        
+		return new int[]{-1,-1};
+	}
+	public static int extendgcd(int a,int b,int[] xy){
+		if(b == 0){
+			xy[0] = 1;
+			xy[1] = 0;
+			return a;
+		}
+
+		int x1y1[] = new int[2];
+		int gcd = extendgcd(b,a%b,x1y1);
+		xy[0] = x1y1[1];
+		xy[1] = x1y1[0] - (a/b)*x1y1[1];
+
+		return gcd;
+	}
+
+}
