@@ -1,0 +1,21 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution
+{
+	public static int differentBitsSumPairwise(ArrayList<Integer> arr, int n)
+	{
+		// Write Your Code Here.
+		int ans = 0;
+		for(int i=0;i<32;i++){
+			int setbit = 0;
+          for(int j=0;j<n;j++){
+			  if((arr.get(j) & (1 << i)) != 0){
+				  setbit++;
+			  }
+		  }
+		  int unsetbit = n-setbit;
+		  ans = ans+(setbit*unsetbit*2);
+		}
+		return ans%1000000007;
+	}
+}
