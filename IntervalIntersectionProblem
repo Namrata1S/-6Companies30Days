@@ -1,0 +1,31 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+    public static ArrayList<ArrayList<Integer>> intersectionIntervals(ArrayList<ArrayList<Integer>> interval1, ArrayList<ArrayList<Integer>> interval2, int n1, int n2) {
+		// Write your code here.
+    ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
+    int aptr = 0;
+    int bptr = 0;
+
+    while(aptr < n1 && bptr < n2){
+      int s1 = interval1.get(aptr).get(0);
+      int e1 = interval1.get(aptr).get(1);
+
+      int s2 = interval2.get(bptr).get(0);
+      int e2 = interval2.get(bptr).get(1);
+      // find the possible intersection, possible points which lies between two points.
+      if(s2 <= e1 && s1 <= e2){
+        int a = Math.max(s1,s2);
+        int b = Math.min(e1,e2);
+
+        ans.add(new ArrayList<>(Arrays.asList(a,b)));
+      }
+      if(e1 < e2){
+        aptr++;
+      }else{
+        bptr++;
+      }
+    }
+    return ans;
+    }
+}
