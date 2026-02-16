@@ -1,0 +1,25 @@
+Ninja is trying to create a robot, which would talk to humans. Ninja is stuck at a particular phase where he wants the robot to create all possible sentences from a 2D array of words. 
+Help Ninja in solving this problem. For a given 2D array of words, your task is to create all possible sentences that can be made using them.
+
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+    public static void createSentences(ArrayList < ArrayList < String >> arr, ArrayList < ArrayList < String >> ans) {
+        // Write your code here.
+        int n = arr.size();
+        int m = arr.get(0).size();
+        ArrayList<String> cur = new ArrayList<>();
+        solveBacktrack(arr,ans,cur,n,0);
+    }
+    public static void solveBacktrack(ArrayList < ArrayList < String >> arr, ArrayList < ArrayList < String >> ans,ArrayList<String> cur,int n,int r){
+       if(r == n){
+         ans.add(new ArrayList<>(cur));
+         return;
+       }
+       for(String word : arr.get(r)){
+           cur.add(word);
+           solveBacktrack(arr,ans,cur,n,r+1);
+           cur.remove(word);
+       }
+    }
+}
